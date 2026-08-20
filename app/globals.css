@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Rozna — design tokens
+
+   Two materials, deliberately not blended. The chrome — the plan, the
+   plaques, the room numbers — is drawn like an architect's survey:
+   graphite on paper, hairline rules, monospaced labels. The rooms
+   themselves are photographic and warm. The site works because those
+   two registers stay apart; every colour below belongs to one or the
+   other.
+
+   The paper and earth values are sampled off the building's rammed
+   walls, the brass off the door studs, and the ember is the orange in
+   the Rozna mark itself.
+----------------------------------------------------------------*/
+@theme {
+  --color-paper: #e7dcc8;
+  --color-paper-dim: #d8caae;
+  --color-ink: #1c1613;
+  --color-graphite: #584e45;
+  --color-night: #0b0908;
+  --color-earth: #6a4b32;
+  --color-brass: #a8843c;
+  --color-ember: #c8552a;
+  --color-glow: #e8843f;
+
+  --font-display: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dm-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-arabic: var(--font-kufi), var(--font-dm-sans), sans-serif;
+
+  /* From the animation skill's table — the built-in curves are too weak
+     to read at the sizes this site animates at. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    /* The travel engine's lerp is this site's smooth scroll. A native
+       smooth behaviour on top of it double-eases every jump. */
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-color: var(--color-night);
+    color: var(--color-paper);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-ember);
+    color: var(--color-paper);
+  }
+}
+
+@layer components {
+  /* --- type ramp ---------------------------------------------------
+     Instrument Serif is a single weight, so the hierarchy has to come
+     from size and measure rather than from bold. */
+  .t-room {
+    font-size: clamp(2.6rem, 5.4vw, 5.5rem);
+    line-height: 0.98;
+  }
+
+  .t-name {
+    font-size: clamp(4rem, 12vw, 11rem);
+    line-height: 0.86;
+    letter-spacing: -0.03em;
+  }
+
+  .t-lead {
+    font-size: clamp(1.5rem, 2.6vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  /* --- the survey ---------------------------------------------------
+     Everything drawn rather than photographed shares this voice. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* A museum label: hairline box, mono text, brass rule under the number. */
+  .plaque {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    border-radius: 2px;
+    padding: 0.5rem 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .rule {
+    height: 1px;
+    background: color-mix(in srgb, currentColor 22%, transparent);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 2px;
+    padding: 0.95rem 1.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    /* Named properties only, and a press that answers immediately. */
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-solid {
+    background: var(--color-ember);
+    color: var(--color-paper);
+  }
+
+  .btn-solid:hover {
+    background: var(--color-glow);
+  }
+
+  .btn-line {
+    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+    color: currentColor;
+  }
+
+  .btn-line:hover {
+    border-color: currentColor;
+  }
+}
+
+@layer utilities {
+  /* The pointed arch from the Rozna mark. It is the doorway between
+     every pair of rooms, so it is a utility rather than a one-off. */
+  .arch {
+    clip-path: url(#rozna-arch);
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  /* Panels are transformed every frame — promote them once instead of
+     letting the compositor re-decide. */
+  .will-travel {
+    will-change: transform;
+  }
+
+  /* Grain over the photographic rooms only; the drawn chrome stays clean. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.26;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+/* ---------------------------------------------------------------
+   Room state
+
+   The engine sets `data-state` on each panel as it passes under the
+   viewport centre; everything a room does on arrival is a CSS
+   transition off that attribute. Transitions rather than keyframes,
+   because walking back and forth past a doorway retargets constantly
+   and keyframes would restart from zero every time.
+----------------------------------------------------------------*/
+[data-enter] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+}
+
+[data-state="here"] [data-enter] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered so the eye is given an order rather than the whole room at
+   once. Kept short — long stagger reads as the page being slow. */
+[data-enter="1"] {
+  transition-delay: 60ms;
+}
+[data-enter="2"] {
+  transition-delay: 120ms;
+}
+[data-enter="3"] {
+  transition-delay: 180ms;
+}
+[data-enter="4"] {
+  transition-delay: 240ms;
+}
+[data-enter="5"] {
+  transition-delay: 300ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Fewer and gentler, not none — the content still needs to arrive. */
+  [data-enter] {
+    transform: none;
+    transition-duration: 300ms;
+    transition-delay: 0ms !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
