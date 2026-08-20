@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import { gate } from "@/lib/rooms";
 
 /**
@@ -118,7 +119,7 @@ export default function Gate({ vertical }: { vertical: boolean }) {
         {/* --- the wall --------------------------------------------- */}
         <div className="absolute inset-0" style={{ opacity: "calc(1 - var(--step, 0) * 1.7)" }}>
           <Image
-            src="/assets/gate-fort.jpg"
+            src={asset("/assets/gate-fort.jpg")}
             alt="The gate at Rozna: carved teak doors set into the fort wall"
             fill
             priority
@@ -144,7 +145,7 @@ export default function Gate({ vertical }: { vertical: boolean }) {
           {/* what is through it */}
           <div className="absolute inset-0 bg-night">
             <Image
-              src="/assets/courtyard-people.jpg"
+              src={asset("/assets/courtyard-people.jpg")}
               alt=""
               fill
               sizes="30vw"
@@ -180,7 +181,7 @@ export default function Gate({ vertical }: { vertical: boolean }) {
             }}
           >
             <div className="absolute" style={leaf.inner}>
-              <Image src="/assets/gate-fort.jpg" alt="" fill sizes="100vw" className="object-cover" />
+              <Image src={asset("/assets/gate-fort.jpg")} alt="" fill sizes="100vw" className="object-cover" />
             </div>
             {/* the wall's own dusk, carried onto the leaf so it does not
                 brighten as it swings out of the picture */}

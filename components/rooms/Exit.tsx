@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Room, { Marker, type RoomProps } from "@/components/Room";
+import { asset } from "@/lib/asset";
 import { brand, exitRoom, plan } from "@/lib/rooms";
 
 /**
@@ -19,7 +20,7 @@ export default function Exit({ state, vertical }: RoomProps) {
     <Room id={plan[7].id} state={state} vertical={vertical} width={104} className="grain bg-night">
       <div data-depth={vertical ? undefined : "-0.03"} className="absolute -inset-x-[6%] inset-y-0">
         <Image
-          src="/assets/exterior-night.jpg"
+          src={asset("/assets/exterior-night.jpg")}
           alt="Rozna from the outside, lit at night"
           fill
           sizes="120vw"

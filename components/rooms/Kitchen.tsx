@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Room, { Marker, type RoomProps } from "@/components/Room";
+import { asset } from "@/lib/asset";
 import { kitchen, methods, plan } from "@/lib/rooms";
 
 /**
@@ -19,7 +20,7 @@ export default function Kitchen({ state, vertical }: RoomProps) {
   return (
     <Room id={plan[5].id} state={state} vertical={vertical} width={112} className="grain bg-ink">
       <div className="absolute inset-0">
-        <Image src="/assets/dish-mandi.jpg" alt="" fill sizes="120vw" className="object-cover opacity-20" />
+        <Image src={asset("/assets/dish-mandi.jpg")} alt="" fill sizes="120vw" className="object-cover opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-b from-night via-ink/95 to-night" />
       </div>
 

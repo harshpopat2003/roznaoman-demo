@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import Room, { Marker, type RoomProps } from "@/components/Room";
+import { asset } from "@/lib/asset";
 import { dishes, plan, table } from "@/lib/rooms";
 
 /**
@@ -80,7 +81,7 @@ export default function Table({ state, vertical, reduced }: RoomProps) {
       {/* the room the table is in */}
       <div className="absolute inset-0">
         <Image
-          src="/assets/interior-arches.jpg"
+          src={asset("/assets/interior-arches.jpg")}
           alt=""
           fill
           sizes="140vw"

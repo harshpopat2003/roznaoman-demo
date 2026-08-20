@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Room, { Marker, type RoomProps } from "@/components/Room";
+import { asset } from "@/lib/asset";
 import { arcade, plan, voices } from "@/lib/rooms";
 
 /**
@@ -26,7 +27,7 @@ export default function Arcade({ state, vertical }: RoomProps) {
     <Room id={plan[3].id} state={state} vertical={vertical} width={132} className="grain bg-night">
       <div data-depth={vertical ? undefined : "-0.06"} className="absolute -inset-x-[10%] inset-y-0">
         <Image
-          src="/assets/hall-gold.jpg"
+          src={asset("/assets/hall-gold.jpg")}
           alt="The lamplit arcade running the length of Rozna"
           fill
           sizes="140vw"

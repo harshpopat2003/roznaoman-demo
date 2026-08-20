@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Gate from "@/components/Gate";
 import Room, { Marker, type RoomProps } from "@/components/Room";
+import { asset } from "@/lib/asset";
 import { courtyard, plan } from "@/lib/rooms";
 
 /**
@@ -44,7 +45,7 @@ export default function Courtyard({ state, vertical }: RoomProps) {
       <div className={vertical ? "sticky top-0 h-svh overflow-hidden" : "contents"}>
       <div data-depth={vertical ? undefined : "-0.03"} className="absolute -inset-x-[5%] inset-y-0">
         <Image
-          src="/assets/courtyard-people.jpg"
+          src={asset("/assets/courtyard-people.jpg")}
           alt="The Rozna courtyard at lunch, seen from the ground floor"
           fill
           priority

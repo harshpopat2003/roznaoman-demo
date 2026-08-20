@@ -16,6 +16,8 @@
  * before launch — in particular the 4.6 rating and the guest count.
  */
 
+import { asset } from "@/lib/asset";
+
 export const brand = {
   name: "Rozna",
   arabic: "روزنة",
@@ -56,12 +58,12 @@ export type RoomId = (typeof plan)[number]["id"];
  * enter one building.
  */
 export const thresholds: { after: RoomId; line: string; through: string }[] = [
-  { after: "courtyard", line: "Your table is laid", through: "/assets/table-set.jpg" },
-  { after: "table", line: "Down the arcade", through: "/assets/hall-gold.jpg" },
-  { after: "arcade", line: "The hall is through here", through: "/assets/event-hall.jpg" },
-  { after: "sabla", line: "Mind the fire", through: "/assets/institute-chef.jpg" },
-  { after: "kitchen", line: "Upstairs, if you want to learn", through: "/assets/institute-class.jpg" },
-  { after: "school", line: "Come back hungry", through: "/assets/exterior-night.jpg" },
+  { after: "courtyard", line: "Your table is laid", through: asset("/assets/table-set.jpg") },
+  { after: "table", line: "Down the arcade", through: asset("/assets/hall-gold.jpg") },
+  { after: "arcade", line: "The hall is through here", through: asset("/assets/event-hall.jpg") },
+  { after: "sabla", line: "Mind the fire", through: asset("/assets/institute-chef.jpg") },
+  { after: "kitchen", line: "Upstairs, if you want to learn", through: asset("/assets/institute-class.jpg") },
+  { after: "school", line: "Come back hungry", through: asset("/assets/exterior-night.jpg") },
 ];
 
 export const gate = {
@@ -90,56 +92,56 @@ export const dishes = [
   {
     name: "Meat Qabuli",
     arabic: "قبولي لحم",
-    img: "/assets/dish-qabuli.jpg",
+    img: asset("/assets/dish-qabuli.jpg"),
     body: "Qabooli mutton, seasoned with selected spices, cooked to perfection and served with Qabooli rice.",
     tag: "Mutton",
   },
   {
     name: "Ursiya Chicken",
     arabic: "عرسية دجاج",
-    img: "/assets/dish-ursiya.jpg",
+    img: asset("/assets/dish-ursiya.jpg"),
     body: "Rice and slow-cooked chicken blended together into a smooth, creamy texture, served with rich local ghee.",
     tag: "Chicken",
   },
   {
     name: "Chicken Mandi",
     arabic: "مندي دجاج",
-    img: "/assets/dish-mandi.jpg",
+    img: asset("/assets/dish-mandi.jpg"),
     body: "Fresh chicken marinated in special mandi spices, cooked over charcoal or in the tandoor, served with aromatic mandi rice.",
     tag: "Charcoal",
   },
   {
     name: "Mixed Grill",
     arabic: "مشاوي مشكلة",
-    img: "/assets/dish-grill.jpg",
+    img: asset("/assets/dish-grill.jpg"),
     body: "Lamb, chicken and kofta off the coals on one board, with grilled onion, lemon and two house sauces.",
     tag: "Sharing",
   },
   {
     name: "Harees",
     arabic: "هريس",
-    img: "/assets/dish-harees.jpg",
+    img: asset("/assets/dish-harees.jpg"),
     body: "Wheat and meat beaten together for hours until it gives up and turns to cream. Finished with ghee and cinnamon.",
     tag: "Slow",
   },
   {
     name: "Prawn Qabuli",
     arabic: "قبولي روبيان",
-    img: "/assets/dish-seafood.jpg",
+    img: asset("/assets/dish-seafood.jpg"),
     body: "Gulf prawns folded through spiced qabuli rice, finished with lime and coriander from the market that morning.",
     tag: "Coastal",
   },
   {
     name: "Mudarbal",
     arabic: "مدربل",
-    img: "/assets/dish-mudarbal.jpg",
+    img: asset("/assets/dish-mudarbal.jpg"),
     body: "Chickpeas cooked down with cumin and dried lime until the pot goes quiet. The dish people order without reading the menu.",
     tag: "Vegetarian",
   },
   {
     name: "Luqaimat",
     arabic: "لقيمات",
-    img: "/assets/dish-luqaimat.jpg",
+    img: asset("/assets/dish-luqaimat.jpg"),
     body: "Fried until they crack, then drowned in date syrup and sesame. Ordered for the table, eaten by one person.",
     tag: "Sweet",
   },
@@ -201,7 +203,7 @@ export const sabla = {
     { k: "Used for", v: "Weddings · corporate · national day" },
     { k: "Catering", v: "The restaurant kitchen, not an outside contract" },
   ],
-  images: ["/assets/event-hall.jpg", "/assets/event-banquet.jpg", "/assets/event-majlis.jpg"],
+  images: [asset("/assets/event-hall.jpg"), asset("/assets/event-banquet.jpg"), asset("/assets/event-majlis.jpg")],
 };
 
 /** Room 05. Three alcoves, three fires. */
@@ -210,19 +212,19 @@ export const methods = [
     n: "i",
     title: "Buried",
     body: "Shuwa goes into the ground wrapped and spiced, and comes back out the best part of a day later, falling apart.",
-    img: "/assets/dish-maqdeed.jpg",
+    img: asset("/assets/dish-maqdeed.jpg"),
   },
   {
     n: "ii",
     title: "Charcoal",
     body: "Mandi is finished over coals or in the tandoor. It is the smoke that makes it mandi; everything else is rice.",
-    img: "/assets/dish-mandi.jpg",
+    img: asset("/assets/dish-mandi.jpg"),
   },
   {
     n: "iii",
     title: "On the saj",
     body: "Bread is pulled off the hot plate in front of you, all day, because bread that waited is a different thing entirely.",
-    img: "/assets/institute-chef.jpg",
+    img: asset("/assets/institute-chef.jpg"),
   },
 ];
 
@@ -236,7 +238,7 @@ export const school = {
   plaque: "Rozna Institute of Culinary Arts",
   title: "A cuisine that is only ever served eventually stops being made.",
   body: "So the last room is a classroom. Short courses in Omani cooking for residents and visitors, taught by the chefs who cook it downstairs — the recipes handed on rather than kept.",
-  images: ["/assets/institute-class.jpg", "/assets/institute-team.jpg", "/assets/institute-pots.jpg"],
+  images: [asset("/assets/institute-class.jpg"), asset("/assets/institute-team.jpg"), asset("/assets/institute-pots.jpg")],
   courses: [
     { k: "Who", v: "Residents, visitors, and children from 10" },
     { k: "What", v: "Qabuli, harees, Omani breads, and pottery alongside" },
