@@ -94,14 +94,16 @@ export function applyPass(panel: HTMLElement, p: number) {
 
   set("--pass", p);
   // The sign goes first: it has said its piece before anything moves.
-  set("--sign", 1 - beat(0.04, 0.3));
+  set("--sign", 1 - beat(0.04, 0.26));
   // Then the leaves, over the longest beat — this is the moment.
-  set("--leaf", beat(0.12, 0.62));
-  // The room behind is revealed while they are still swinging, so it is
-  // already there rather than arriving afterwards.
-  set("--reveal", beat(0.34, 0.78));
-  // Last, you walk through what you have just opened.
-  set("--step", beat(0.62, 1));
+  set("--leaf", beat(0.12, 0.52));
+  // Then the doorway opens out until the view through it is the whole
+  // screen. Strictly after the leaves, because these are a sequence and
+  // not a chord: overlapping them was what put two differently cropped
+  // copies of the courtyard on screen at the same time.
+  set("--step", beat(0.56, 0.86));
+  // Only once the room fills the screen does it say anything.
+  set("--reveal", beat(0.88, 1));
 }
 
 type Options = {

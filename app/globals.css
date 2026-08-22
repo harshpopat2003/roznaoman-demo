@@ -259,3 +259,107 @@
     animation-iteration-count: 1 !important;
   }
 }
+
+/* ------------------------------------------------------------------
+   The gate's geometry.
+
+   Two photographs, chosen by screen size, because one cannot do both
+   jobs. The wide shot of the fort wall says "this is a fort", and on a
+   phone — drawn about 630px across — it is sharp enough to. On a
+   desktop it is asked to cover 1440px or more, and since the original
+   is only 387px wide that is past a 3x enlargement: the wall goes to
+   mush. There the close-up of the doors takes over, which is a genuine
+   1080px and lands near 1:1.
+
+   Every number below is a fraction of its own uncropped frame, read off
+   the photograph. `anchor` is how much of the plate sits above the top
+   of the screen — a portrait frame covering a landscape screen can only
+   show about half its height, so this chooses which half.
+------------------------------------------------------------------- */
+.gate {
+  /* gate-fort.jpg — 387x516, the wall and the whole gate tower */
+  --plate-ratio: 0.75;
+  --door-l-pc: 0.34;
+  --door-r-pc: 0.605;
+  --door-t-pc: 0.665;
+  --door-b-pc: 0.887;
+  --door-split-pc: 0.488;
+  --plate-anchor: 0.476;
+}
+
+@media (min-width: 1024px) {
+  .gate {
+    /* gate-front.jpg — 1242x699, a straight-on shot of the doors with
+       real plaster wall either side at native resolution, so it needs no
+       upscale to cover a desktop viewport. The wide fort shot below
+       1024px is a 387px original and was going soft past about a 1.3x
+       enlargement — this is the client's own replacement photo for that
+       exact problem. */
+    --plate-ratio: 1.7768;
+    --door-l-pc: 0.31;
+    --door-r-pc: 0.74;
+    --door-t-pc: 0.3;
+    --door-b-pc: 0.9;
+    --door-split-pc: 0.485;
+    --plate-anchor: 0.42;
+  }
+}
+
+.gate {
+  /* Derived, so nothing above has to be restated per breakpoint. */
+  --plate-h: max(100svh, calc(100vw / var(--plate-ratio)));
+  --plate-w: calc(var(--plate-h) * var(--plate-ratio));
+  --plate-l: calc(50vw - var(--plate-w) / 2);
+  /* Between bottom-aligned and top-aligned, so the plate always covers:
+     on a phone it is only as tall as the screen and there is no slack to
+     spend on the anchor. */
+  --plate-t: clamp(
+    calc(100svh - var(--plate-h)),
+    calc(0px - var(--plate-h) * var(--plate-anchor)),
+    0px
+  );
+
+  /* The door's rectangle, relative to the plate. */
+  --door-l: calc(var(--plate-w) * var(--door-l-pc));
+  --door-t: calc(var(--plate-h) * var(--door-t-pc));
+  --door-w: calc(var(--plate-w) * (var(--door-r-pc) - var(--door-l-pc)));
+  --door-h: calc(var(--plate-h) * (var(--door-b-pc) - var(--door-t-pc)));
+
+  /* The window, opening from that rectangle out to the whole viewport.
+     Still plate-relative, so the far ends are the negated plate offsets. */
+  --win-l: calc(var(--door-l) + (0px - var(--plate-l) - var(--door-l)) * var(--step, 0));
+  --win-t: calc(var(--door-t) + (0px - var(--plate-t) - var(--door-t)) * var(--step, 0));
+  --win-w: calc(var(--door-w) + (100vw - var(--door-w)) * var(--step, 0));
+  --win-h: calc(var(--door-h) + (100svh - var(--door-h)) * var(--step, 0));
+}
+
+/* A leaf is a window onto the wall photograph: the image inside it is
+   laid out at the full size of the plate and pushed back by the leaf's
+   own offset, so at rest the two halves reassemble the frame exactly and
+   the seam is invisible. */
+.gate-leaf > .gate-leaf-img {
+  height: calc(100% / (var(--door-b-pc) - var(--door-t-pc)));
+  top: calc(-100% * var(--door-t-pc) / (var(--door-b-pc) - var(--door-t-pc)));
+}
+
+.gate-leaf-l {
+  left: calc(var(--door-l-pc) * 100%);
+  width: calc((var(--door-split-pc) - var(--door-l-pc)) * 100%);
+  transform-origin: left center;
+}
+
+.gate-leaf-l > .gate-leaf-img {
+  width: calc(100% / (var(--door-split-pc) - var(--door-l-pc)));
+  left: calc(-100% * var(--door-l-pc) / (var(--door-split-pc) - var(--door-l-pc)));
+}
+
+.gate-leaf-r {
+  left: calc(var(--door-split-pc) * 100%);
+  width: calc((var(--door-r-pc) - var(--door-split-pc)) * 100%);
+  transform-origin: right center;
+}
+
+.gate-leaf-r > .gate-leaf-img {
+  width: calc(100% / (var(--door-r-pc) - var(--door-split-pc)));
+  left: calc(-100% * var(--door-split-pc) / (var(--door-r-pc) - var(--door-split-pc)));
+}
